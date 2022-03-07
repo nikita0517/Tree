@@ -1,0 +1,39 @@
+// LEETCODE 222. Count Complete Tree Nodes
+
+class Solution {
+public:
+int leftheight(TreeNode* root)
+   {
+       int h=0;
+       while(root)
+       {
+           h++;
+           root=root->left;
+       }
+       return h;
+   }
+    int rightheight(TreeNode* root)
+   {
+       int h=0;
+       while(root)
+       {
+           h++;
+           root=root->right;
+       }
+       return h;
+   }
+    int countNodes(TreeNode* root) {
+        if(root==NULL)
+            return 0;
+        int leftsubtreeheight=leftheight(root);
+        int rightsubtreeheight=rightheight(root);
+        
+        if(leftsubtreeheight == rightsubtreeheight)
+            return pow(2, leftsubtreeheight)-1;
+        return 1+countNodes(root->left)+countNodes(root->right);
+    }
+    };
+    
+    
+    Time Complexity: O(logn ^2) because log n for height of the tree(complete binary tree) and log n for the number of nodes.
+    Space Complexity: O(log n)
