@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int search_ino_ele(vector<int>&ino,int start_i,int end_i,int value){
+        int i;
+        for(i=start_i;i<=end_i;i++){
+            if(ino[i]==value)
+                return i;
+        }
+        return -1;
+    }
+    TreeNode* buildTree1(vector<int>& pre, vector<int>& ino, int &ind_pre,int start_i,int end_i,int n) {
+        //int start_i=0,end_i=n-1;
+        if(ind_pre>=n ||start_i>end_i)
+            return NULL;
+        TreeNode* tnode=new TreeNode(pre[ind_pre++]);
+         if(start_i==end_i)
+            return tnode;
+        int index=search_ino_ele(ino,start_i,end_i,tnode->val);
+        tnode->left=buildTree1(pre,ino,ind_pre,start_i,index-1,n);
+        tnode->right=buildTree1(pre,ino,ind_pre,index+1,end_i,n);
+        return tnode;
+    }
+    TreeNode* buildTree(vector<int>& pre, vector<int>& ino) {
+        int n=pre.size();
+         int ind_pre=0;
+        int start_i=0,end_i=n-1;
+        return buildTree1(pre, ino,ind_pre,start_i,end_i,n);
+    }
+};
